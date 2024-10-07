@@ -11,6 +11,7 @@ Public Class Pago
     Private monto_pagado As Double
     Private conex As conexion
 
+    ' constructor
     Public Sub New()
         Try
             conex = New conexion
@@ -91,6 +92,7 @@ Public Class Pago
     Public Function Registrar_pago()
         Try
             Dim Enlace = Conexion.conectar()
+
 
             Dim query As String = "SELECT * FROM td_pagos"
             Dim command As New MySqlCommand(query, Enlace)
