@@ -5,6 +5,7 @@ Imports Mysqlx
 Public Class Pago
     Private id_pago As String
     Private id_factura As String
+    Private fecha_pago As DateTime
     Private id_metodo_pago As String
     Private id_moneda As String
     Private referencia As Int32
@@ -61,7 +62,7 @@ Public Class Pago
     End Property
 
     ' Getter y Setter para referencia
-    Public Property n_Referencia As Int32
+    Public Property n_ref As Int32
         Get
             Return referencia
         End Get
@@ -80,17 +81,13 @@ Public Class Pago
         End Set
     End Property
 
-    Public Property Conexion As conexion
+    Public Property FechaPago As Date
         Get
-            Return conex
+            Return fecha_pago
         End Get
-        Set(value As conexion)
-            conex = value
+        Set(value As Date)
+            fecha_pago = value
         End Set
     End Property
-
-
-
-
 End Class
 
