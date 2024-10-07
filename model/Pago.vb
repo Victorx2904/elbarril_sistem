@@ -89,25 +89,7 @@ Public Class Pago
         End Set
     End Property
 
-    Public Function Registrar_pago()
-        Try
-            Dim Enlace = Conexion.conectar()
 
-
-            Dim query As String = "SELECT * FROM td_pagos"
-            Dim command As New MySqlCommand(query, Enlace)
-            Dim reader As MySqlDataReader = command.ExecuteReader()
-
-            While reader.Read()
-                Console.WriteLine(reader("nombre_columna").ToString())
-            End While
-
-            reader.Close()
-            Conexion.Desconectar()
-        Catch ex As Exception
-            MsgBox("Error al conectar: " & ex.Message)
-        End Try
-    End Function
 
 
 End Class
