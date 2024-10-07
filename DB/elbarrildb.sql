@@ -20,6 +20,9 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `elbarrildb`
 --
+
+-- Note: It is important set creation first
+
 CREATE DATABASE IF NOT EXISTS `elbarrildb` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci;
 USE `elbarrildb`;
 
