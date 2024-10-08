@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 08-10-2024 a las 04:07:25
+-- Tiempo de generación: 08-10-2024 a las 04:45:13
 -- Versión del servidor: 8.0.39
 -- Versión de PHP: 8.2.12
 
@@ -20,7 +20,7 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `elbarrildb`
 --
-CREATE DATABASE IF NOT EXISTS `elbarrildb` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci;
+CREATE DATABASE IF NOT EXISTS `elbarrildb` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
 USE `elbarrildb`;
 
 -- --------------------------------------------------------
@@ -33,7 +33,7 @@ CREATE TABLE `td_cierre` (
   `id_cierre` int NOT NULL,
   `total_cierre` float NOT NULL,
   `fecha_cierre` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -44,8 +44,8 @@ CREATE TABLE `td_cierre` (
 CREATE TABLE `td_departamento` (
   `id_dpto` int NOT NULL,
   `codigo_dpto` int NOT NULL,
-  `descripcion_dpto` varchar(30) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `descripcion_dpto` varchar(30) COLLATE utf8mb4_general_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `td_departamento`
@@ -68,13 +68,13 @@ INSERT INTO `td_departamento` (`id_dpto`, `codigo_dpto`, `descripcion_dpto`) VAL
 CREATE TABLE `td_facturas` (
   `id_factura` int NOT NULL,
   `n_factura` int NOT NULL,
-  `nombre_cliente` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
-  `descripcion_orden` varchar(30) DEFAULT NULL,
+  `nombre_cliente` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `descripcion_orden` varchar(30) COLLATE utf8mb4_general_ci DEFAULT NULL,
   `fecha_entrada` date NOT NULL,
   `monto_total` float(18,2) DEFAULT NULL,
   `id_status` int DEFAULT NULL,
   `n_cierre_id` int DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `td_facturas`
@@ -93,10 +93,10 @@ CREATE TABLE `td_factura_detalle` (
   `id_factura_detalle` int NOT NULL,
   `id_factura` int NOT NULL,
   `id_producto` int NOT NULL,
-  `descripcion_prod` varchar(200) DEFAULT NULL,
+  `descripcion_prod` varchar(200) COLLATE utf8mb4_general_ci DEFAULT NULL,
   `cantidad_prod` int NOT NULL,
   `monto_prod` float(18,2) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `td_factura_detalle`
@@ -113,8 +113,8 @@ INSERT INTO `td_factura_detalle` (`id_factura_detalle`, `id_factura`, `id_produc
 
 CREATE TABLE `td_lista_metodos` (
   `id_metodo` int NOT NULL,
-  `nombre_metodo` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `nombre_metodo` varchar(50) COLLATE utf8mb4_general_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `td_lista_metodos`
@@ -136,8 +136,8 @@ INSERT INTO `td_lista_metodos` (`id_metodo`, `nombre_metodo`) VALUES
 
 CREATE TABLE `td_moneda` (
   `id_moneda` int NOT NULL,
-  `moneda` varchar(30) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `moneda` varchar(30) COLLATE utf8mb4_general_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `td_moneda`
@@ -161,7 +161,7 @@ CREATE TABLE `td_pagos` (
   `id_moneda` int NOT NULL,
   `n_ref` int DEFAULT NULL,
   `monto_pagado` float(18,2) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `td_pagos`
@@ -179,11 +179,11 @@ INSERT INTO `td_pagos` (`id_pago`, `id_factura`, `fecha_pago`, `id_metodo_pago`,
 CREATE TABLE `td_productos` (
   `id_producto` int NOT NULL,
   `codigo_prod` int NOT NULL,
-  `nombre_prod` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `descripcion_prod` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `nombre_prod` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `descripcion_prod` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `id_dpto` int NOT NULL,
   `precio_prod` float(18,2) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `td_productos`
@@ -200,8 +200,8 @@ INSERT INTO `td_productos` (`id_producto`, `codigo_prod`, `nombre_prod`, `descri
 
 CREATE TABLE `td_status` (
   `id_status` int NOT NULL,
-  `descripcion` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `descripcion` varchar(50) COLLATE utf8mb4_general_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `td_status`
