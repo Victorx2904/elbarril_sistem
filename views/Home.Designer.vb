@@ -29,17 +29,17 @@ Partial Class Home
         ' 
         ' Button1
         ' 
-        Button1.Location = New Point(376, 251)
+        Button1.Location = New Point(571, 311)
         Button1.Name = "Button1"
         Button1.Size = New Size(216, 61)
         Button1.TabIndex = 0
-        Button1.Text = "Button1"
+        Button1.Text = "traer datos"
         Button1.UseVisualStyleBackColor = True
         ' 
         ' Label1
         ' 
         Label1.AutoSize = True
-        Label1.Location = New Point(327, 128)
+        Label1.Location = New Point(347, 98)
         Label1.Name = "Label1"
         Label1.Size = New Size(63, 25)
         Label1.TabIndex = 1
@@ -47,7 +47,7 @@ Partial Class Home
         ' 
         ' Button2
         ' 
-        Button2.Location = New Point(552, 482)
+        Button2.Location = New Point(316, 288)
         Button2.Name = "Button2"
         Button2.Size = New Size(186, 68)
         Button2.TabIndex = 2
