@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 08-10-2024 a las 18:37:05
+-- Tiempo de generación: 09-10-2024 a las 22:02:06
 -- Versión del servidor: 8.0.39
 -- Versión de PHP: 8.2.12
 
@@ -64,29 +64,6 @@ CREATE TABLE `td_cierre` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `td_facturas`
---
-
-CREATE TABLE `td_facturas` (
-  `id_factura` int NOT NULL,
-  `n_factura` int NOT NULL,
-  `nombre_cliente` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `fecha_entrada` date NOT NULL,
-  `monto_total` float(18,2) DEFAULT NULL,
-  `id_status` int DEFAULT NULL,
-  `n_cierre_id` int DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Volcado de datos para la tabla `td_facturas`
---
-
-INSERT INTO `td_facturas` (`id_factura`, `n_factura`, `nombre_cliente`, `fecha_entrada`, `monto_total`, `id_status`, `n_cierre_id`) VALUES
-(1, 101, 'juan perez', '2024-10-06', 30.00, 1, NULL);
-
--- --------------------------------------------------------
-
---
 -- Estructura de tabla para la tabla `td_lista_metodos`
 --
 
@@ -118,8 +95,7 @@ CREATE TABLE `td_mesas` (
   `n_mesa` int NOT NULL,
   `id_empleado` int NOT NULL,
   `n_personas` int NOT NULL,
-  `comentario` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `sub_total` int DEFAULT NULL
+  `comentario` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -149,11 +125,16 @@ INSERT INTO `td_moneda` (`id_moneda`, `moneda`) VALUES
 
 CREATE TABLE `td_orden` (
   `id_orden` int NOT NULL,
-  `id_producto` int NOT NULL,
-  `id_mesa` int NOT NULL,
-  `comentario_prod` int NOT NULL,
-  `cantidad_prod` int NOT NULL,
-  `monto_prod` int NOT NULL
+  `n_factura` int NOT NULL,
+  `nombre_cliente` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `id_mesa` int DEFAULT NULL,
+  `id_orden_detalle` int NOT NULL,
+  `id_pagos` int DEFAULT NULL,
+  `id_status` int NOT NULL,
+  `id_n_cierre` int DEFAULT NULL,
+  `monto_total` decimal(6,2) NOT NULL,
+  `fecha_modificacion` datetime DEFAULT NULL,
+  `fecha_creacion` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -164,8 +145,11 @@ CREATE TABLE `td_orden` (
 
 CREATE TABLE `td_orden_detalle` (
   `id_orden_detalle` int NOT NULL,
-  `id_factura` int NOT NULL,
-  `id_orden` int NOT NULL
+  `id_producto` int NOT NULL,
+  `comentario_prod` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `cantidad_prod` int NOT NULL,
+  `monto_prod` decimal(6,2) NOT NULL,
+  `fecha_entrada` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -183,13 +167,6 @@ CREATE TABLE `td_pagos` (
   `n_ref` int DEFAULT NULL,
   `monto_pagado` float(18,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Volcado de datos para la tabla `td_pagos`
---
-
-INSERT INTO `td_pagos` (`id_pago`, `id_factura`, `fecha_pago`, `id_metodo_pago`, `id_moneda`, `n_ref`, `monto_pagado`) VALUES
-(1, 1, '2024-10-06 13:17:46', 3, 1, NULL, 30.00);
 
 -- --------------------------------------------------------
 
@@ -265,14 +242,6 @@ ALTER TABLE `td_cierre`
   ADD PRIMARY KEY (`id_cierre`);
 
 --
--- Indices de la tabla `td_facturas`
---
-ALTER TABLE `td_facturas`
-  ADD PRIMARY KEY (`id_factura`),
-  ADD KEY `n_cierre_id` (`n_cierre_id`),
-  ADD KEY `id_status` (`id_status`);
-
---
 -- Indices de la tabla `td_lista_metodos`
 --
 ALTER TABLE `td_lista_metodos`
@@ -296,15 +265,17 @@ ALTER TABLE `td_moneda`
 ALTER TABLE `td_orden`
   ADD PRIMARY KEY (`id_orden`),
   ADD KEY `id_mesa` (`id_mesa`),
-  ADD KEY `id_producto` (`id_producto`);
+  ADD KEY `id_status` (`id_status`),
+  ADD KEY `id_n_cierre` (`id_n_cierre`),
+  ADD KEY `id_pagos` (`id_pagos`),
+  ADD KEY `id_orden_detalle` (`id_orden_detalle`);
 
 --
 -- Indices de la tabla `td_orden_detalle`
 --
 ALTER TABLE `td_orden_detalle`
   ADD PRIMARY KEY (`id_orden_detalle`),
-  ADD KEY `id_factura` (`id_factura`),
-  ADD KEY `id_orden` (`id_orden`);
+  ADD KEY `id_producto` (`id_producto`);
 
 --
 -- Indices de la tabla `td_pagos`
@@ -350,12 +321,6 @@ ALTER TABLE `td_categoria`
 --
 ALTER TABLE `td_cierre`
   MODIFY `id_cierre` int NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `td_facturas`
---
-ALTER TABLE `td_facturas`
-  MODIFY `id_factura` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `td_lista_metodos`
@@ -416,36 +381,25 @@ ALTER TABLE `td_tasa`
 --
 
 --
--- Filtros para la tabla `td_cierre`
---
-ALTER TABLE `td_cierre`
-  ADD CONSTRAINT `td_cierre_ibfk_1` FOREIGN KEY (`id_cierre`) REFERENCES `td_facturas` (`n_cierre_id`);
-
---
--- Filtros para la tabla `td_facturas`
---
-ALTER TABLE `td_facturas`
-  ADD CONSTRAINT `td_facturas_ibfk_1` FOREIGN KEY (`id_status`) REFERENCES `td_status` (`id_status`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
 -- Filtros para la tabla `td_orden`
 --
 ALTER TABLE `td_orden`
   ADD CONSTRAINT `td_orden_ibfk_1` FOREIGN KEY (`id_mesa`) REFERENCES `td_mesas` (`id_mesa`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `td_orden_ibfk_2` FOREIGN KEY (`id_producto`) REFERENCES `td_productos` (`id_producto`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `td_orden_ibfk_2` FOREIGN KEY (`id_orden_detalle`) REFERENCES `td_orden_detalle` (`id_orden_detalle`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `td_orden_ibfk_3` FOREIGN KEY (`id_n_cierre`) REFERENCES `td_cierre` (`id_cierre`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `td_orden_ibfk_4` FOREIGN KEY (`id_pagos`) REFERENCES `td_pagos` (`id_pago`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `td_orden_ibfk_5` FOREIGN KEY (`id_status`) REFERENCES `td_status` (`id_status`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `td_orden_detalle`
 --
 ALTER TABLE `td_orden_detalle`
-  ADD CONSTRAINT `td_orden_detalle_ibfk_1` FOREIGN KEY (`id_orden`) REFERENCES `td_orden` (`id_orden`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `td_orden_detalle_ibfk_2` FOREIGN KEY (`id_factura`) REFERENCES `td_facturas` (`id_factura`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `td_orden_detalle_ibfk_1` FOREIGN KEY (`id_producto`) REFERENCES `td_productos` (`id_producto`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `td_pagos`
 --
 ALTER TABLE `td_pagos`
-  ADD CONSTRAINT `td_pagos_ibfk_1` FOREIGN KEY (`id_factura`) REFERENCES `td_facturas` (`id_factura`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `td_pagos_ibfk_2` FOREIGN KEY (`id_metodo_pago`) REFERENCES `td_lista_metodos` (`id_metodo`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `td_pagos_ibfk_3` FOREIGN KEY (`id_moneda`) REFERENCES `td_moneda` (`id_moneda`) ON DELETE CASCADE ON UPDATE CASCADE;
 
