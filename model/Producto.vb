@@ -11,9 +11,6 @@ Public Class Producto
     Public Sub New()
         Try
             conex = New conexion
-            conex.conectar()
-            MsgBox("Conexion")
-            conex.Desconectar()
         Catch ex As Exception
             MsgBox(ex.Message + "  ERROR!!")
         End Try

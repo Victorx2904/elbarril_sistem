@@ -20,6 +20,26 @@ Public Class ctr_categoria
                 categoria.Nombre_ctg = reader("nombre_ctg")
                 categoria.Fecha_creacion = If(IsDBNull(reader("fecha_creacion")), Nothing, Convert.ToDateTime(reader("fecha_creacion")))
                 categoria.Fecha_modificacion = If(IsDBNull(reader("fecha_modificacion")), Nothing, Convert.ToDateTime(reader("fecha_modificacion")))
+                categorias.Add(categoria)
+            End While
+            conexion.Desconectar()
+            Return categorias
+        Catch ex As Exception
+            MsgBox("Error al conectar: " & ex.Message)
+        End Try
+
+    End Function
+
+    Public Function Obtener_Nombre_ctg()
+
+        Dim categorias As New List(Of String)
+
+        Try
+            Dim query As String = "SELECT * FROM td_categoria"
+            Dim command As New MySqlCommand(query, conexion.conectar())
+            Dim reader As MySqlDataReader = command.ExecuteReader()
+            While reader.Read()
+                categorias.Add(reader("nombre_ctg"))
             End While
             conexion.Desconectar()
             Return categorias

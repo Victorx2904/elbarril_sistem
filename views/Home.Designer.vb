@@ -25,11 +25,12 @@ Partial Class Home
         btn_traer = New Button()
         Label1 = New Label()
         Button2 = New Button()
+        ListBox1 = New ListBox()
         SuspendLayout()
         ' 
         ' btn_traer
         ' 
-        btn_traer.Location = New Point(397, 239)
+        btn_traer.Location = New Point(194, 328)
         btn_traer.Name = "btn_traer"
         btn_traer.Size = New Size(216, 61)
         btn_traer.TabIndex = 0
@@ -54,11 +55,21 @@ Partial Class Home
         Button2.Text = "Button2"
         Button2.UseVisualStyleBackColor = True
         ' 
+        ' ListBox1
+        ' 
+        ListBox1.FormattingEnabled = True
+        ListBox1.ItemHeight = 25
+        ListBox1.Location = New Point(442, 158)
+        ListBox1.Name = "ListBox1"
+        ListBox1.Size = New Size(476, 204)
+        ListBox1.TabIndex = 3
+        ' 
         ' Home
         ' 
         AutoScaleDimensions = New SizeF(10F, 25F)
         AutoScaleMode = AutoScaleMode.Font
         ClientSize = New Size(1000, 562)
+        Controls.Add(ListBox1)
         Controls.Add(Button2)
         Controls.Add(Label1)
         Controls.Add(btn_traer)
@@ -72,5 +83,6 @@ Partial Class Home
     Friend WithEvents btn_traer As Button
     Friend WithEvents Label1 As Label
     Friend WithEvents Button2 As Button
+    Friend WithEvents ListBox1 As ListBox
 
 End Class
