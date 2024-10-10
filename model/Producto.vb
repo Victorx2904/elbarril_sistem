@@ -13,6 +13,7 @@ Public Class Producto
             conex = New conexion
             conex.conectar()
             MsgBox("Conexion")
+            conex.Desconectar()
         Catch ex As Exception
             MsgBox(ex.Message + "  ERROR!!")
         End Try

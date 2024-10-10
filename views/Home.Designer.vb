@@ -22,24 +22,24 @@ Partial Class Home
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
-        Button1 = New Button()
+        btn_traer = New Button()
         Label1 = New Label()
         Button2 = New Button()
         SuspendLayout()
         ' 
-        ' Button1
+        ' btn_traer
         ' 
-        Button1.Location = New Point(571, 311)
-        Button1.Name = "Button1"
-        Button1.Size = New Size(216, 61)
-        Button1.TabIndex = 0
-        Button1.Text = "traer datos"
-        Button1.UseVisualStyleBackColor = True
+        btn_traer.Location = New Point(397, 239)
+        btn_traer.Name = "btn_traer"
+        btn_traer.Size = New Size(216, 61)
+        btn_traer.TabIndex = 0
+        btn_traer.Text = "traer datos"
+        btn_traer.UseVisualStyleBackColor = True
         ' 
         ' Label1
         ' 
         Label1.AutoSize = True
-        Label1.Location = New Point(347, 98)
+        Label1.Location = New Point(214, 116)
         Label1.Name = "Label1"
         Label1.Size = New Size(63, 25)
         Label1.TabIndex = 1
@@ -47,7 +47,7 @@ Partial Class Home
         ' 
         ' Button2
         ' 
-        Button2.Location = New Point(316, 288)
+        Button2.Location = New Point(158, 144)
         Button2.Name = "Button2"
         Button2.Size = New Size(186, 68)
         Button2.TabIndex = 2
@@ -61,7 +61,7 @@ Partial Class Home
         ClientSize = New Size(1000, 562)
         Controls.Add(Button2)
         Controls.Add(Label1)
-        Controls.Add(Button1)
+        Controls.Add(btn_traer)
         Margin = New Padding(4)
         Name = "Home"
         Text = "Form1"
@@ -69,7 +69,7 @@ Partial Class Home
         PerformLayout()
     End Sub
 
-    Friend WithEvents Button1 As Button
+    Friend WithEvents btn_traer As Button
     Friend WithEvents Label1 As Label
     Friend WithEvents Button2 As Button
 
