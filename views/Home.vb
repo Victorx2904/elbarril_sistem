@@ -1,5 +1,5 @@
 ﻿Imports MySql.Data.MySqlClient
-Imports ElBarrilSoftware.Producto
+Imports ElBarrilSoftware.ctr_metodo_pago
 Imports ElBarrilSoftware.ctr_categoria
 Imports System.Runtime.InteropServices.JavaScript.JSType
 
@@ -11,7 +11,14 @@ Public Class Home
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
         Try
-            Dim produ As Producto = New Producto()
+            Dim ctg As New ctr_categoria
+            Dim mtd As New ctr_metodo_pago
+            Dim lista As New List(Of String)
+            lista = ctg.Obtener_Nombre_ctg()
+            ComboBox1.Items.AddRange(lista.ToArray())
+            lista = mtd.Obtener_lista_metodo()
+            ComboBox2.Items.AddRange(lista.ToArray())
+
         Catch ex As Exception
             MsgBox(ex.Message + "  ERROR!!")
         End Try

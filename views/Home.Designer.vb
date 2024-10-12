@@ -26,6 +26,8 @@ Partial Class Home
         Label1 = New Label()
         Button2 = New Button()
         ListBox1 = New ListBox()
+        ComboBox1 = New ComboBox()
+        ComboBox2 = New ComboBox()
         SuspendLayout()
         ' 
         ' btn_traer
@@ -59,16 +61,34 @@ Partial Class Home
         ' 
         ListBox1.FormattingEnabled = True
         ListBox1.ItemHeight = 25
-        ListBox1.Location = New Point(442, 158)
+        ListBox1.Location = New Point(436, 311)
         ListBox1.Name = "ListBox1"
         ListBox1.Size = New Size(476, 204)
         ListBox1.TabIndex = 3
+        ' 
+        ' ComboBox1
+        ' 
+        ComboBox1.FormattingEnabled = True
+        ComboBox1.Location = New Point(523, 63)
+        ComboBox1.Name = "ComboBox1"
+        ComboBox1.Size = New Size(264, 33)
+        ComboBox1.TabIndex = 4
+        ' 
+        ' ComboBox2
+        ' 
+        ComboBox2.FormattingEnabled = True
+        ComboBox2.Location = New Point(523, 163)
+        ComboBox2.Name = "ComboBox2"
+        ComboBox2.Size = New Size(264, 33)
+        ComboBox2.TabIndex = 5
         ' 
         ' Home
         ' 
         AutoScaleDimensions = New SizeF(10F, 25F)
         AutoScaleMode = AutoScaleMode.Font
         ClientSize = New Size(1000, 562)
+        Controls.Add(ComboBox2)
+        Controls.Add(ComboBox1)
         Controls.Add(ListBox1)
         Controls.Add(Button2)
         Controls.Add(Label1)
@@ -84,5 +104,7 @@ Partial Class Home
     Friend WithEvents Label1 As Label
     Friend WithEvents Button2 As Button
     Friend WithEvents ListBox1 As ListBox
+    Friend WithEvents ComboBox1 As ComboBox
+    Friend WithEvents ComboBox2 As ComboBox
 
 End Class
