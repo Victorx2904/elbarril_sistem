@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 09-10-2024 a las 22:02:06
+-- Tiempo de generación: 12-10-2024 a las 18:43:53
 -- Versión del servidor: 8.0.39
 -- Versión de PHP: 8.2.12
 
@@ -59,6 +59,20 @@ CREATE TABLE `td_cierre` (
   `id_cierre` int NOT NULL,
   `total_cierre` float NOT NULL,
   `fecha_cierre` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `td_empleados`
+--
+
+CREATE TABLE `td_empleados` (
+  `id_empleado` int NOT NULL,
+  `nombre` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `apellido` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `email` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `id_usuario` int DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -127,9 +141,7 @@ CREATE TABLE `td_orden` (
   `id_orden` int NOT NULL,
   `n_factura` int NOT NULL,
   `nombre_cliente` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `id_mesa` int DEFAULT NULL,
-  `id_orden_detalle` int NOT NULL,
-  `id_pagos` int DEFAULT NULL,
+  `id_mesas` int NOT NULL,
   `id_status` int NOT NULL,
   `id_n_cierre` int DEFAULT NULL,
   `monto_total` decimal(6,2) NOT NULL,
@@ -145,6 +157,7 @@ CREATE TABLE `td_orden` (
 
 CREATE TABLE `td_orden_detalle` (
   `id_orden_detalle` int NOT NULL,
+  `id_orden` int NOT NULL,
   `id_producto` int NOT NULL,
   `comentario_prod` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `cantidad_prod` int NOT NULL,
@@ -160,7 +173,7 @@ CREATE TABLE `td_orden_detalle` (
 
 CREATE TABLE `td_pagos` (
   `id_pago` int NOT NULL,
-  `id_factura` int NOT NULL,
+  `id_orden` int NOT NULL,
   `fecha_pago` datetime DEFAULT NULL,
   `id_metodo_pago` int NOT NULL,
   `id_moneda` int NOT NULL,
@@ -189,6 +202,25 @@ CREATE TABLE `td_productos` (
 
 INSERT INTO `td_productos` (`id_producto`, `codigo_prod`, `nombre_prod`, `descripcion_prod`, `id_ctg`, `precio_prod`) VALUES
 (1, 1010, 'Cachapa Con Queso De Mano', '150g de queso de mano con natilla ', 1, 3.00);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `td_roll`
+--
+
+CREATE TABLE `td_roll` (
+  `id_roll` int NOT NULL,
+  `roll` varchar(20) COLLATE utf8mb4_general_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `td_roll`
+--
+
+INSERT INTO `td_roll` (`id_roll`, `roll`) VALUES
+(1, 'Administrador'),
+(2, 'Empleado');
 
 -- --------------------------------------------------------
 
@@ -225,6 +257,26 @@ CREATE TABLE `td_tasa` (
   `fecha_modificacion` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `td_usuarios`
+--
+
+CREATE TABLE `td_usuarios` (
+  `id_usuario` int NOT NULL,
+  `user` varchar(20) COLLATE utf8mb4_general_ci NOT NULL,
+  `password` varchar(20) COLLATE utf8mb4_general_ci NOT NULL,
+  `id_roll` int NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `td_usuarios`
+--
+
+INSERT INTO `td_usuarios` (`id_usuario`, `user`, `password`, `id_roll`) VALUES
+(1, 'admin', 'admin', 1);
+
 --
 -- Índices para tablas volcadas
 --
@@ -242,6 +294,13 @@ ALTER TABLE `td_cierre`
   ADD PRIMARY KEY (`id_cierre`);
 
 --
+-- Indices de la tabla `td_empleados`
+--
+ALTER TABLE `td_empleados`
+  ADD PRIMARY KEY (`id_empleado`),
+  ADD KEY `id_usuario` (`id_usuario`);
+
+--
 -- Indices de la tabla `td_lista_metodos`
 --
 ALTER TABLE `td_lista_metodos`
@@ -251,7 +310,8 @@ ALTER TABLE `td_lista_metodos`
 -- Indices de la tabla `td_mesas`
 --
 ALTER TABLE `td_mesas`
-  ADD PRIMARY KEY (`id_mesa`);
+  ADD PRIMARY KEY (`id_mesa`),
+  ADD KEY `id_empleado` (`id_empleado`);
 
 --
 -- Indices de la tabla `td_moneda`
@@ -264,18 +324,17 @@ ALTER TABLE `td_moneda`
 --
 ALTER TABLE `td_orden`
   ADD PRIMARY KEY (`id_orden`),
-  ADD KEY `id_mesa` (`id_mesa`),
   ADD KEY `id_status` (`id_status`),
   ADD KEY `id_n_cierre` (`id_n_cierre`),
-  ADD KEY `id_pagos` (`id_pagos`),
-  ADD KEY `id_orden_detalle` (`id_orden_detalle`);
+  ADD KEY `id_mesas` (`id_mesas`);
 
 --
 -- Indices de la tabla `td_orden_detalle`
 --
 ALTER TABLE `td_orden_detalle`
   ADD PRIMARY KEY (`id_orden_detalle`),
-  ADD KEY `id_producto` (`id_producto`);
+  ADD KEY `id_producto` (`id_producto`),
+  ADD KEY `id_orden` (`id_orden`);
 
 --
 -- Indices de la tabla `td_pagos`
@@ -283,8 +342,9 @@ ALTER TABLE `td_orden_detalle`
 ALTER TABLE `td_pagos`
   ADD PRIMARY KEY (`id_pago`),
   ADD KEY `id_moneda` (`id_metodo_pago`),
-  ADD KEY `id_factura` (`id_factura`,`id_moneda`),
-  ADD KEY `id_moneda_2` (`id_moneda`);
+  ADD KEY `id_factura` (`id_orden`,`id_moneda`),
+  ADD KEY `id_moneda_2` (`id_moneda`),
+  ADD KEY `id_orden` (`id_orden`);
 
 --
 -- Indices de la tabla `td_productos`
@@ -292,6 +352,12 @@ ALTER TABLE `td_pagos`
 ALTER TABLE `td_productos`
   ADD PRIMARY KEY (`id_producto`),
   ADD KEY `id_dpto` (`id_ctg`);
+
+--
+-- Indices de la tabla `td_roll`
+--
+ALTER TABLE `td_roll`
+  ADD PRIMARY KEY (`id_roll`);
 
 --
 -- Indices de la tabla `td_status`
@@ -305,6 +371,13 @@ ALTER TABLE `td_status`
 ALTER TABLE `td_tasa`
   ADD PRIMARY KEY (`id_tasa`),
   ADD KEY `id_moneda` (`id_moneda`);
+
+--
+-- Indices de la tabla `td_usuarios`
+--
+ALTER TABLE `td_usuarios`
+  ADD PRIMARY KEY (`id_usuario`),
+  ADD KEY `id_roll` (`id_roll`);
 
 --
 -- AUTO_INCREMENT de las tablas volcadas
@@ -321,6 +394,12 @@ ALTER TABLE `td_categoria`
 --
 ALTER TABLE `td_cierre`
   MODIFY `id_cierre` int NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `td_empleados`
+--
+ALTER TABLE `td_empleados`
+  MODIFY `id_empleado` int NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `td_lista_metodos`
@@ -365,6 +444,12 @@ ALTER TABLE `td_productos`
   MODIFY `id_producto` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
+-- AUTO_INCREMENT de la tabla `td_roll`
+--
+ALTER TABLE `td_roll`
+  MODIFY `id_roll` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT de la tabla `td_status`
 --
 ALTER TABLE `td_status`
@@ -377,31 +462,49 @@ ALTER TABLE `td_tasa`
   MODIFY `id_tasa` int NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT de la tabla `td_usuarios`
+--
+ALTER TABLE `td_usuarios`
+  MODIFY `id_usuario` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- Restricciones para tablas volcadas
 --
+
+--
+-- Filtros para la tabla `td_empleados`
+--
+ALTER TABLE `td_empleados`
+  ADD CONSTRAINT `td_empleados_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `td_usuarios` (`id_usuario`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Filtros para la tabla `td_mesas`
+--
+ALTER TABLE `td_mesas`
+  ADD CONSTRAINT `td_mesas_ibfk_1` FOREIGN KEY (`id_empleado`) REFERENCES `td_empleados` (`id_empleado`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `td_orden`
 --
 ALTER TABLE `td_orden`
-  ADD CONSTRAINT `td_orden_ibfk_1` FOREIGN KEY (`id_mesa`) REFERENCES `td_mesas` (`id_mesa`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `td_orden_ibfk_2` FOREIGN KEY (`id_orden_detalle`) REFERENCES `td_orden_detalle` (`id_orden_detalle`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `td_orden_ibfk_3` FOREIGN KEY (`id_n_cierre`) REFERENCES `td_cierre` (`id_cierre`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `td_orden_ibfk_4` FOREIGN KEY (`id_pagos`) REFERENCES `td_pagos` (`id_pago`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `td_orden_ibfk_5` FOREIGN KEY (`id_status`) REFERENCES `td_status` (`id_status`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `td_orden_ibfk_5` FOREIGN KEY (`id_status`) REFERENCES `td_status` (`id_status`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `td_orden_ibfk_6` FOREIGN KEY (`id_mesas`) REFERENCES `td_mesas` (`id_mesa`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `td_orden_detalle`
 --
 ALTER TABLE `td_orden_detalle`
-  ADD CONSTRAINT `td_orden_detalle_ibfk_1` FOREIGN KEY (`id_producto`) REFERENCES `td_productos` (`id_producto`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `td_orden_detalle_ibfk_1` FOREIGN KEY (`id_producto`) REFERENCES `td_productos` (`id_producto`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `td_orden_detalle_ibfk_2` FOREIGN KEY (`id_orden`) REFERENCES `td_orden` (`id_orden`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `td_pagos`
 --
 ALTER TABLE `td_pagos`
   ADD CONSTRAINT `td_pagos_ibfk_2` FOREIGN KEY (`id_metodo_pago`) REFERENCES `td_lista_metodos` (`id_metodo`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `td_pagos_ibfk_3` FOREIGN KEY (`id_moneda`) REFERENCES `td_moneda` (`id_moneda`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `td_pagos_ibfk_3` FOREIGN KEY (`id_moneda`) REFERENCES `td_moneda` (`id_moneda`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `td_pagos_ibfk_4` FOREIGN KEY (`id_orden`) REFERENCES `td_orden` (`id_orden`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `td_productos`
@@ -414,6 +517,12 @@ ALTER TABLE `td_productos`
 --
 ALTER TABLE `td_tasa`
   ADD CONSTRAINT `td_tasa_ibfk_1` FOREIGN KEY (`id_moneda`) REFERENCES `td_moneda` (`id_moneda`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Filtros para la tabla `td_usuarios`
+--
+ALTER TABLE `td_usuarios`
+  ADD CONSTRAINT `td_usuarios_ibfk_1` FOREIGN KEY (`id_roll`) REFERENCES `td_roll` (`id_roll`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

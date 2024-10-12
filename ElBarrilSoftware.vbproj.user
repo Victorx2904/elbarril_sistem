@@ -4,6 +4,9 @@
     <Compile Update="views\frm_factura.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="views\frm_Login.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="views\Home.vb">
       <SubType>Form</SubType>
     </Compile>
