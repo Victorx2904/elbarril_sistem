@@ -31,21 +31,22 @@ Public Class ctr_categoria
     End Function
 
     Public Function Obtener_Nombre_ctg()
-
-        Dim categorias As New List(Of String)
-
+        Dim categorias As New List(Of Categoria)
         Try
-            Dim query As String = "SELECT * FROM td_categoria"
+            Dim query As String = "SELECT id_ctg, nombre_ctg FROM td_categoria;"
             Dim command As New MySqlCommand(query, conexion.conectar())
             Dim reader As MySqlDataReader = command.ExecuteReader()
             While reader.Read()
-                categorias.Add(reader("nombre_ctg"))
+                Dim categoria As New Categoria
+                categoria.Id_cgt = reader.GetInt32("id_ctg")
+                categoria.Nombre_ctg = reader.GetString("nombre_ctg")
+                categorias.Add(categoria)
             End While
             conexion.Desconectar()
             Return categorias
         Catch ex As Exception
-            MsgBox("Error al conectar: " & ex.Message)
+            ' MsgBox("Error al conectar: " & ex.Message)
+            Return False
         End Try
-
     End Function
 End Class
