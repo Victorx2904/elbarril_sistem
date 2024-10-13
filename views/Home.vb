@@ -8,37 +8,41 @@ Public Class Home
 
 
 
-    Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+    'Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
-        Try
-            Dim ctg As New ctr_categoria
-            Dim mtd As New ctr_metodo_pago
-            Dim lista As New List(Of String)
-            lista = ctg.Obtener_Nombre_ctg()
-            ComboBox1.Items.AddRange(lista.ToArray())
-            lista = mtd.Obtener_lista_metodo()
-            ComboBox2.Items.AddRange(lista.ToArray())
+    '    Try
+    '        Dim ctg As New ctr_categoria
+    '        Dim mtd As New ctr_metodo_pago
+    '        Dim lista As New List(Of String)
+    '        lista = ctg.Obtener_Nombre_ctg()
+    '        ComboBox1.Items.AddRange(lista.ToArray())
+    '        lista = mtd.Obtener_lista_metodo()
+    '        ComboBox2.Items.AddRange(lista.ToArray())
 
-        Catch ex As Exception
-            MsgBox(ex.Message + "  ERROR!!")
-        End Try
+    '    Catch ex As Exception
+    '        MsgBox(ex.Message + "  ERROR!!")
+    '    End Try
 
-    End Sub
+    'End Sub
 
-    Private Sub btn_traer_Click(sender As Object, e As EventArgs) Handles btn_traer.Click
+    'Private Sub btn_traer_Click(sender As Object, e As EventArgs)
 
-        Try
-            Dim ctg As New ctr_categoria
-            Dim lista As New List(Of String)
-            lista = ctg.Obtener_Nombre_ctg()
+    '    Try
+    '        Dim ctg As New ctr_categoria
+    '        Dim lista As New List(Of String)
+    '        lista = ctg.Obtener_Nombre_ctg
 
-            ListBox1.Items.AddRange(lista.ToArray())
+    '        ListBox1.Items.AddRange(lista.ToArray)
 
-        Catch ex As Exception
+    '    Catch ex As Exception
 
-        End Try
+    '    End Try
 
 
 
+    'End Sub
+
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+        frmProducto.ShowDialog()
     End Sub
 End Class
