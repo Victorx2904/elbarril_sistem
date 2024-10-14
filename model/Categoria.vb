@@ -1,11 +1,12 @@
 ﻿Imports ElBarrilSoftware.conexion
+Imports ElBarrilSoftware.ctr_categoria
 Public Class Categoria
 
     Private idCgt As Int32
-    Private codigoCtg As Int32
     Private nombreCtg As String
     Private fechaCreacion As DateTime
     Private fechaModificacion As DateTime
+    Private activa As Int16
     Private conexion As conexion
 
     Public Property Id_cgt As Integer
@@ -14,15 +15,6 @@ Public Class Categoria
         End Get
         Set(value As Integer)
             idCgt = value
-        End Set
-    End Property
-
-    Public Property Codigo_ctg As Integer
-        Get
-            Return codigoCtg
-        End Get
-        Set(value As Integer)
-            codigoCtg = value
         End Set
     End Property
 
@@ -53,5 +45,30 @@ Public Class Categoria
         End Set
     End Property
 
+    Public Property Activo As Short
+        Get
+            Return activa
+        End Get
+        Set(value As Short)
+            activa = value
+        End Set
+    End Property
+
+    Public Function AgregarCategoria(ctg As Categoria)
+
+        Try
+            Dim control_ctg As New ctr_categoria
+            If control_ctg.ConsultarNombre(ctg.Nombre_ctg) Then
+                MsgBox("Existe")
+            Else
+                If control_ctg.AgregarCategoria(ctg) Then
+                    MsgBox("Guardado con exito!!")
+                End If
+            End If
+        Catch ex As Exception
+            MsgBox("error" & ex.Message)
+        End Try
+
+    End Function
 
 End Class

@@ -10,11 +10,14 @@ Public Class frm_Login
 
         If respuesta = True Then
             Me.Hide()
-            Home.Show()
-
+            frmCategoria.Show()
         Else
             MsgBox("Datos Incorrectos")
         End If
+
+    End Sub
+
+    Private Sub frm_Login_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
     End Sub
 End Class

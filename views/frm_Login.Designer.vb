@@ -31,23 +31,26 @@ Partial Class frm_Login
         ' 
         ' TextBox1
         ' 
-        TextBox1.Location = New Point(491, 203)
+        TextBox1.Location = New Point(393, 162)
+        TextBox1.Margin = New Padding(2, 2, 2, 2)
         TextBox1.Name = "TextBox1"
-        TextBox1.Size = New Size(274, 31)
+        TextBox1.Size = New Size(220, 27)
         TextBox1.TabIndex = 0
         ' 
         ' TextBox2
         ' 
-        TextBox2.Location = New Point(491, 261)
+        TextBox2.Location = New Point(393, 209)
+        TextBox2.Margin = New Padding(2, 2, 2, 2)
         TextBox2.Name = "TextBox2"
-        TextBox2.Size = New Size(274, 31)
+        TextBox2.Size = New Size(220, 27)
         TextBox2.TabIndex = 1
         ' 
         ' btn_login
         ' 
-        btn_login.Location = New Point(521, 353)
+        btn_login.Location = New Point(417, 282)
+        btn_login.Margin = New Padding(2, 2, 2, 2)
         btn_login.Name = "btn_login"
-        btn_login.Size = New Size(201, 77)
+        btn_login.Size = New Size(161, 62)
         btn_login.TabIndex = 2
         btn_login.Text = "Ingresar"
         btn_login.UseVisualStyleBackColor = True
@@ -55,31 +58,34 @@ Partial Class frm_Login
         ' txt_user
         ' 
         txt_user.AutoSize = True
-        txt_user.Location = New Point(491, 175)
+        txt_user.Location = New Point(393, 140)
+        txt_user.Margin = New Padding(2, 0, 2, 0)
         txt_user.Name = "txt_user"
-        txt_user.Size = New Size(47, 25)
+        txt_user.Size = New Size(38, 20)
         txt_user.TabIndex = 3
         txt_user.Text = "User"
         ' 
         ' txt_password
         ' 
         txt_password.AutoSize = True
-        txt_password.Location = New Point(491, 237)
+        txt_password.Location = New Point(393, 190)
+        txt_password.Margin = New Padding(2, 0, 2, 0)
         txt_password.Name = "txt_password"
-        txt_password.Size = New Size(87, 25)
+        txt_password.Size = New Size(70, 20)
         txt_password.TabIndex = 4
         txt_password.Text = "Password"
         ' 
         ' frm_Login
         ' 
-        AutoScaleDimensions = New SizeF(10F, 25F)
+        AutoScaleDimensions = New SizeF(8F, 20F)
         AutoScaleMode = AutoScaleMode.Font
-        ClientSize = New Size(1283, 667)
+        ClientSize = New Size(1026, 534)
         Controls.Add(txt_password)
         Controls.Add(txt_user)
         Controls.Add(btn_login)
         Controls.Add(TextBox2)
         Controls.Add(TextBox1)
+        Margin = New Padding(2, 2, 2, 2)
         Name = "frm_Login"
         Text = "frm_Login"
         ResumeLayout(False)
