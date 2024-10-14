@@ -9,6 +9,7 @@ Public Class Producto
     Private categoria_prod As Categoria
     Private nombre_categoria As String
     Private id_categoria As Integer
+    Private activo_producto As Boolean
     Private conex As conexion
 
     Public Sub New()
@@ -93,6 +94,15 @@ Public Class Producto
         End Get
         Set(value As Integer)
             categoria_prod.Id_cgt = value
+        End Set
+    End Property
+
+    Public Property ActivoProducto As Boolean
+        Get
+            Return activo_producto
+        End Get
+        Set(value As Boolean)
+            activo_producto = value
         End Set
     End Property
 End Class
