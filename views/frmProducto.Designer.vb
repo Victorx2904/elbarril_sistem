@@ -32,9 +32,7 @@ Partial Class frmProducto
         cmbCategoria = New ComboBox()
         txtDescripcion = New RichTextBox()
         Label5 = New Label()
-        DataGridView1 = New DataGridView()
-        btnAgregar = New Button()
-        btnActualizar = New Button()
+        dgProducto = New DataGridView()
         IdProducto = New DataGridViewTextBoxColumn()
         CodigoProducto = New DataGridViewTextBoxColumn()
         NombreProducto = New DataGridViewTextBoxColumn()
@@ -42,7 +40,12 @@ Partial Class frmProducto
         IdCategoria = New DataGridViewTextBoxColumn()
         NombreCategoria = New DataGridViewTextBoxColumn()
         PrecioProducto = New DataGridViewTextBoxColumn()
-        CType(DataGridView1, ComponentModel.ISupportInitialize).BeginInit()
+        ActivoProducto = New DataGridViewTextBoxColumn()
+        btnAgregar = New Button()
+        btnActualizar = New Button()
+        btnLimpiar = New Button()
+        chkActivo = New CheckBox()
+        CType(dgProducto, ComponentModel.ISupportInitialize).BeginInit()
         SuspendLayout()
         ' 
         ' Label1
@@ -127,32 +130,14 @@ Partial Class frmProducto
         Label5.TabIndex = 10
         Label5.Text = "Descripción"
         ' 
-        ' DataGridView1
+        ' dgProducto
         ' 
-        DataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridView1.Columns.AddRange(New DataGridViewColumn() {IdProducto, CodigoProducto, NombreProducto, DescripcionProducto, IdCategoria, NombreCategoria, PrecioProducto})
-        DataGridView1.Location = New Point(12, 251)
-        DataGridView1.Name = "DataGridView1"
-        DataGridView1.Size = New Size(653, 193)
-        DataGridView1.TabIndex = 11
-        ' 
-        ' btnAgregar
-        ' 
-        btnAgregar.Location = New Point(438, 27)
-        btnAgregar.Name = "btnAgregar"
-        btnAgregar.Size = New Size(75, 23)
-        btnAgregar.TabIndex = 12
-        btnAgregar.Text = "Agregar"
-        btnAgregar.UseVisualStyleBackColor = True
-        ' 
-        ' btnActualizar
-        ' 
-        btnActualizar.Location = New Point(438, 56)
-        btnActualizar.Name = "btnActualizar"
-        btnActualizar.Size = New Size(75, 23)
-        btnActualizar.TabIndex = 13
-        btnActualizar.Text = "Actualizar"
-        btnActualizar.UseVisualStyleBackColor = True
+        dgProducto.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        dgProducto.Columns.AddRange(New DataGridViewColumn() {IdProducto, CodigoProducto, NombreProducto, DescripcionProducto, IdCategoria, NombreCategoria, PrecioProducto, ActivoProducto})
+        dgProducto.Location = New Point(12, 251)
+        dgProducto.Name = "dgProducto"
+        dgProducto.Size = New Size(653, 193)
+        dgProducto.TabIndex = 11
         ' 
         ' IdProducto
         ' 
@@ -203,14 +188,62 @@ Partial Class frmProducto
         PrecioProducto.Name = "PrecioProducto"
         PrecioProducto.ReadOnly = True
         ' 
+        ' ActivoProducto
+        ' 
+        ActivoProducto.DataPropertyName = "ActivoProducto"
+        ActivoProducto.HeaderText = "Activo"
+        ActivoProducto.Name = "ActivoProducto"
+        ActivoProducto.Visible = False
+        ' 
+        ' btnAgregar
+        ' 
+        btnAgregar.Location = New Point(438, 27)
+        btnAgregar.Name = "btnAgregar"
+        btnAgregar.Size = New Size(75, 23)
+        btnAgregar.TabIndex = 12
+        btnAgregar.Text = "Agregar"
+        btnAgregar.UseVisualStyleBackColor = True
+        ' 
+        ' btnActualizar
+        ' 
+        btnActualizar.Location = New Point(438, 56)
+        btnActualizar.Name = "btnActualizar"
+        btnActualizar.Size = New Size(75, 23)
+        btnActualizar.TabIndex = 13
+        btnActualizar.Text = "Actualizar"
+        btnActualizar.UseVisualStyleBackColor = True
+        ' 
+        ' btnLimpiar
+        ' 
+        btnLimpiar.Location = New Point(438, 85)
+        btnLimpiar.Name = "btnLimpiar"
+        btnLimpiar.Size = New Size(75, 23)
+        btnLimpiar.TabIndex = 14
+        btnLimpiar.Text = "Limpiar"
+        btnLimpiar.UseVisualStyleBackColor = True
+        ' 
+        ' chkActivo
+        ' 
+        chkActivo.AutoSize = True
+        chkActivo.Checked = True
+        chkActivo.CheckState = CheckState.Checked
+        chkActivo.Location = New Point(428, 213)
+        chkActivo.Name = "chkActivo"
+        chkActivo.Size = New Size(60, 19)
+        chkActivo.TabIndex = 15
+        chkActivo.Text = "Activo"
+        chkActivo.UseVisualStyleBackColor = True
+        ' 
         ' frmProducto
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
         ClientSize = New Size(677, 460)
+        Controls.Add(chkActivo)
+        Controls.Add(btnLimpiar)
         Controls.Add(btnActualizar)
         Controls.Add(btnAgregar)
-        Controls.Add(DataGridView1)
+        Controls.Add(dgProducto)
         Controls.Add(Label5)
         Controls.Add(txtDescripcion)
         Controls.Add(cmbCategoria)
@@ -223,7 +256,7 @@ Partial Class frmProducto
         Controls.Add(Label1)
         Name = "frmProducto"
         Text = "Producto"
-        CType(DataGridView1, ComponentModel.ISupportInitialize).EndInit()
+        CType(dgProducto, ComponentModel.ISupportInitialize).EndInit()
         ResumeLayout(False)
         PerformLayout()
     End Sub
@@ -238,7 +271,7 @@ Partial Class frmProducto
     Friend WithEvents cmbCategoria As ComboBox
     Friend WithEvents txtDescripcion As RichTextBox
     Friend WithEvents Label5 As Label
-    Friend WithEvents DataGridView1 As DataGridView
+    Friend WithEvents dgProducto As DataGridView
     Friend WithEvents btnAgregar As Button
     Friend WithEvents btnActualizar As Button
     Friend WithEvents CodProd As DataGridViewTextBoxColumn
@@ -246,6 +279,7 @@ Partial Class frmProducto
     Friend WithEvents NombreProd As DataGridViewTextBoxColumn
     Friend WithEvents PrecioProd As DataGridViewTextBoxColumn
     Friend WithEvents DescripcionProd As DataGridViewTextBoxColumn
+    Friend WithEvents btnLimpiar As Button
     Friend WithEvents IdProducto As DataGridViewTextBoxColumn
     Friend WithEvents CodigoProducto As DataGridViewTextBoxColumn
     Friend WithEvents NombreProducto As DataGridViewTextBoxColumn
@@ -253,4 +287,6 @@ Partial Class frmProducto
     Friend WithEvents IdCategoria As DataGridViewTextBoxColumn
     Friend WithEvents NombreCategoria As DataGridViewTextBoxColumn
     Friend WithEvents PrecioProducto As DataGridViewTextBoxColumn
+    Friend WithEvents ActivoProducto As DataGridViewTextBoxColumn
+    Friend WithEvents chkActivo As CheckBox
 End Class
