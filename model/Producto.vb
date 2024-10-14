@@ -6,6 +6,10 @@ Public Class Producto
     Private descripcion_prod As String
     Private cod_prod As String
     Private precio_prod As Double
+    Private categoria_prod As Categoria
+    Private nombre_categoria As String
+    Private id_categoria As Integer
+    Private activo_producto As Boolean
     Private conex As conexion
 
     Public Sub New()
@@ -63,6 +67,42 @@ Public Class Producto
         End Get
         Set(value As Double)
             precio_prod = value
+        End Set
+    End Property
+
+    Public Property CategoriaProd As Categoria
+        Get
+            Return categoria_prod
+        End Get
+        Set(value As Categoria)
+            categoria_prod = value
+        End Set
+    End Property
+
+    Public Property NombreCategoria As String
+        Get
+            Return categoria_prod.Nombre_ctg
+        End Get
+        Set(value As String)
+            categoria_prod.Nombre_ctg = value
+        End Set
+    End Property
+
+    Public Property IdCategoria As Integer
+        Get
+            Return categoria_prod.Id_cgt
+        End Get
+        Set(value As Integer)
+            categoria_prod.Id_cgt = value
+        End Set
+    End Property
+
+    Public Property ActivoProducto As Boolean
+        Get
+            Return activo_producto
+        End Get
+        Set(value As Boolean)
+            activo_producto = value
         End Set
     End Property
 End Class
