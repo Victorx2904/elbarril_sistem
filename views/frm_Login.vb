@@ -10,7 +10,7 @@ Public Class frm_Login
 
         If respuesta = True Then
             Me.Hide()
-            frmCategoria.Show()
+            Home.Show()
         Else
             MsgBox("Datos Incorrectos")
         End If
