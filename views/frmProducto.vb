@@ -14,7 +14,7 @@ Public Class frmProducto
     Private Sub ObtenerCategorias()
         Dim categoria As New ctr_categoria
         Dim listaCategorias As New List(Of Categoria)
-        listaCategorias = categoria.Obtener_Nombre_ctg()
+        listaCategorias = categoria.Obtener_Nombre_ctg_activo()
         cmbCategoria.ValueMember = "Id_ctg"
         cmbCategoria.DisplayMember = "Nombre_ctg"
         cmbCategoria.DataSource = listaCategorias.ToList()

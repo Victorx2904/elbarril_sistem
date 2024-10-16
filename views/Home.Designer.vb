@@ -23,29 +23,43 @@ Partial Class Home
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Button1 = New Button()
+        Button2 = New Button()
         SuspendLayout()
         ' 
         ' Button1
         ' 
-        Button1.Location = New Point(12, 12)
+        Button1.Location = New Point(17, 20)
+        Button1.Margin = New Padding(4, 5, 4, 5)
         Button1.Name = "Button1"
-        Button1.Size = New Size(120, 32)
+        Button1.Size = New Size(171, 53)
         Button1.TabIndex = 0
         Button1.Text = "Producto"
         Button1.UseVisualStyleBackColor = True
         ' 
+        ' Button2
+        ' 
+        Button2.Location = New Point(17, 97)
+        Button2.Margin = New Padding(4, 5, 4, 5)
+        Button2.Name = "Button2"
+        Button2.Size = New Size(171, 53)
+        Button2.TabIndex = 1
+        Button2.Text = "Categorias"
+        Button2.UseVisualStyleBackColor = True
+        ' 
         ' Home
         ' 
-        AutoScaleDimensions = New SizeF(7F, 15F)
+        AutoScaleDimensions = New SizeF(10F, 25F)
         AutoScaleMode = AutoScaleMode.Font
-        ClientSize = New Size(700, 337)
+        ClientSize = New Size(256, 235)
+        Controls.Add(Button2)
         Controls.Add(Button1)
-        Margin = New Padding(3, 2, 3, 2)
+        Margin = New Padding(4, 3, 4, 3)
         Name = "Home"
         Text = "Form1"
         ResumeLayout(False)
     End Sub
 
     Friend WithEvents Button1 As Button
+    Friend WithEvents Button2 As Button
 
 End Class

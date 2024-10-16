@@ -59,10 +59,10 @@ Public Class Categoria
         Try
             Dim control_ctg As New ctr_categoria
             If control_ctg.ConsultarNombre(ctg.Nombre_ctg) Then
-                MsgBox("Existe")
+                MsgBox("La Categoria " & ctg.Nombre_ctg & " ya Existe")
             Else
                 If control_ctg.AgregarCategoria(ctg) Then
-                    MsgBox("Guardado con exito!!")
+                    MsgBox("Categoria " & ctg.Nombre_ctg & "Guardado con exito!!")
                 End If
             End If
         Catch ex As Exception
@@ -70,5 +70,25 @@ Public Class Categoria
         End Try
 
     End Function
+
+    Public Function ActualizarCategoria(ctg As Categoria)
+        Try
+            Dim control_ctg As New ctr_categoria
+            Dim control_prod As New ctrProducto
+            If control_ctg.ConsultarCtgId(ctg.Id_cgt) Then
+                If control_ctg.ActualizarCategoria(ctg) Then
+                    MsgBox("Categoria " & ctg.Nombre_ctg & " Actualizado con exito!!")
+                    Exit Function
+                End If
+            End If
+
+            MsgBox("No se pudo Realizar la Actualizacion")
+        Catch ex As Exception
+            MsgBox("error" & ex.Message)
+            Return False
+        End Try
+    End Function
+
+
 
 End Class

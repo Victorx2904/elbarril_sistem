@@ -28,10 +28,32 @@ Public Class ctrProducto
             conexion.Desconectar()
             Return productos
         Catch ex As Exception
-            ' MsgBox("Error al conectar: " & ex.Message)
+            MsgBox("Error al conectar: " & ex.Message)
             Return False
         End Try
     End Function
+
+    Public Function CategoriaActivaEnProducto(id As Integer) As Boolean
+        Try
+            Dim query As String = "SELECT COUNT(*) FROM td_productos WHERE id_ctg = @id_ctg;"
+            Dim command As New MySqlCommand(query, conexion.conectar())
+
+            ' Añade el parámetro necesario
+            command.Parameters.AddWithValue("@id_ctg", id)
+
+            ' Ejecuta la consulta y verifica el resultado
+            Dim count As Integer = Convert.ToInt32(command.ExecuteScalar())
+            conexion.Desconectar()
+
+            ' Retorna true si el conteo es mayor a 0
+            Return count > 0
+        Catch ex As Exception
+            MsgBox("Error al conectar: " & ex.Message)
+            Return False
+        End Try
+    End Function
+
+
     Public Function ValidarExistencia(producto As Producto) As Boolean
         Try
             Dim query As String = "select count(*) from td_productos where codigo_prod = @codigo_prod or nombre_prod = @nombre_prod;"
